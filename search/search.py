@@ -72,7 +72,7 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
-def depthFirstSearch(problem):
+def depthFirstSearch(problem): 
     """
     Search the deepest nodes in the search tree first.
 
@@ -86,8 +86,43 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    explored = [] #list of all explored nodes
+    actions = recursive_dfs(problem.getStartState(),problem,explored,1) #The actions to take for reaching the goal state
+    print "total actions: ",len(actions)
+    return actions
+    
+def recursive_dfs(state,problem,explored,reverse):
+	"""
+	state has the start state. Problem has information regarding the problem. explored has explored nodes. reverse is intialized to 0 if it's 1 add the nodes in reverse order.
+	"""
+	
+	if (problem.isGoalState(state)):  #if it's goal state
+		return []
+		
+	explored.append(state) #i.e update the explored list.
+	
+	if (reverse):  #Add the sucessors in the reverse order
+		reverse_insertion = list(problem.getSuccessors(state))
+		reverse_insertion.reverse()
+		for successor,direction,cost in reverse_insertion: #All successors
+			if successor not in explored:
+				action= recursive_dfs(successor,problem,explored,reverse)
+			
+				if (action != False):
+					return [direction] + action
+				
+		return False
+		
+	else:
+		for successor,direction,cost in problem.getSuccessors(state): #All successors
+			if successor not in explored:
+				action= recursive_dfs(successor,problem,explored,reverse)
+			
+				if (action != False):
+					return [direction] + action
+				
+		return False
+	
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
@@ -106,10 +141,9 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
-def aStarSearch(problem, heuristic=nullHeuristic):
+def aStarSearch(problem, heuristic=manhattanHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+	util.raiseNotDefined()
 
 
 # Abbreviations
