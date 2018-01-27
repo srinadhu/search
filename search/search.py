@@ -141,9 +141,9 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
-def aStarSearch(problem, heuristic=manhattanHeuristic):
+def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-	util.raiseNotDefined()
+    util.raiseNotDefined()
 
 
 # Abbreviations
