@@ -132,48 +132,7 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
 	"""Search the node of least total cost first."""
 
-	start_state = problem.getStartState()  #start state of problem
-	frontier = util.PriorityQueue() #frontier queue
-	G_value = {start_state:0}  #g(n) for any node n.
-	explored = [] #all explored nodes
-	parent = {} #for getting the solution back.
-	frontier.push (start_state, 0 ) #update frontier. Since G_value at start will be zero.
-
-	while True:
-		
-		if frontier.isEmpty(): #couldn't find any solution
-			return None
-
-		temp_state = frontier.pop() #get a state.
-
-		if (problem.isGoalState(temp_state)): # Got the solution and returns it
-			
-			result = [] #return the result
-
-			while (temp_state != start_state):
-				parent_state, direction = parent[temp_state]
-				result.insert(0,direction) #keep adding it to start for correct directions
-				temp_state = parent_state
-			return result
-
-		explored.append(temp_state) #update explored list
-
-		frontier_list = []  #Get all the nodes in frontier in a list as a iterable.
-
-		for index, (p, c, i) in enumerate(frontier.heap):  #used from util.py file
-			frontier_list.append(i)
-
-		for successor, direction, cost in problem.getSuccessors(temp_state): 					
-			
-			if successor not in explored and successor not in frontier_list:  #inserting
-				G_value[successor] = G_value[temp_state] + cost
-				frontier.push(successor, G_value[successor])
-				parent[successor] = (temp_state, direction)
-
-			if successor in frontier_list and G_value[successor] > G_value[temp_state] + cost:  #updating if already present and less cost.
-				G_value[successor] = G_value[temp_state] + cost
-				frontier.update(successor, G_value[successor])
-				parent[successor] = (temp_state, direction)     
+	return aStarSearch(problem, nullHeuristic)  #since UCS is same as A* Search with nullHeuristic.   
 
 def nullHeuristic(state, problem=None):
     """
