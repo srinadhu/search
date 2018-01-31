@@ -287,22 +287,25 @@ class CornersProblem(search.SearchProblem):
         self._expanded = 0 # DO NOT CHANGE; Number of search nodes expanded
         # Please add any code here which you would like to use
         # in initializing the problem
-        "*** YOUR CODE HERE ***"
+
+        self.cornersMap = tuple([False for x in self.corners]) # A tuple intially (False, False, False, False)
+        self.start = (self.startingPosition, self.cornersMap)
+
 
     def getStartState(self):
         """
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.start
+       
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return sum(state[1]) == 4 # Return whether all corners are visited
+        
 
     def getSuccessors(self, state):
         """
@@ -324,7 +327,16 @@ class CornersProblem(search.SearchProblem):
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
 
-            "*** YOUR CODE HERE ***"
+            x,y = state[0]
+            dx, dy = Actions.directionToVector(action) 
+            nextx, nexty = int(x+dx), int(y+dy)
+            if not self.walls[nextx][nexty]:
+                nextcornerMap = list(state[1]) 
+                neighbour = (nextx, nexty)
+                for i in range(0,len(self.corners)):
+                    if neighbour == self.corners[i]:
+                        nextcornerMap[i] = True 
+                successors.append( ( (neighbour, tuple(nextcornerMap)), action, 1) ) 
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
@@ -343,6 +355,7 @@ class CornersProblem(search.SearchProblem):
         return len(actions)
 
 
+
 def cornersHeuristic(state, problem):
     """
     A heuristic for the CornersProblem that you defined.
@@ -356,11 +369,31 @@ def cornersHeuristic(state, problem):
     shortest path from the state to a goal of the problem; i.e.  it should be
     admissible (as well as consistent).
     """
-    corners = problem.corners # These are the corner coordinates
-    walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
+    corners = problem.corners 
+    if problem.isGoalState(state): 
+        return 0
 
-    
-    return 0 # Default to trivial solution
+    startPos = state[0] 		# Take pacman position as startPosition
+    value = 0 				# Intialise the heuristic value = 0
+
+    remainingCorners = []  # List of remaining unvisited corners
+
+    for i in range(len(state[1])): #if not visited
+		if not state[1][i]:
+        		remainingCorners.append(corners[i])   
+
+    closestCorner = min(remainingCorners, key= lambda x: util.manhattanDistance(x, startPos))
+    closestCornerDist = util.manhattanDistance(closestCorner, startPos)
+    value += closestCornerDist # Add the distance from closed corner to pacman
+
+    distances = []
+    for corner in remainingCorners:
+	distances.append(util.manhattanDistance(corner, closestCorner))
+
+    value += max(distances)		
+
+    return value
+
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"

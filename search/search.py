@@ -88,7 +88,7 @@ def depthFirstSearch(problem):
     """
     explored = [] #list of all explored nodes
     actions = recursive_dfs(problem.getStartState(),problem,explored,1) #The actions to take for reaching the goal state
-    print "total actions: ",len(actions)
+    #print "Number of  actions: ",len(actions)
     return actions
     
 def recursive_dfs(state,problem,explored,reverse):
