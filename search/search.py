@@ -126,8 +126,35 @@ def recursive_dfs(state,problem,explored,reverse):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    frontier = util.Queue()                			# This is for the Frontier Queue
+    frontier.push(problem.getStartState()) 			# Adding initial state to frontier Queue
+    explored = []                          			# Initialising empty explored list
+    parent = {}                            			# Dictionary mapping successor to it's parent state and action
+
+    while True:
+        
+        if frontier.isEmpty():
+            return None                                         # No Solution found
+
+        state = frontier.pop() 					# Get an element from frontier
+
+        if problem.isGoalState(state): 				# If goal tests passes return list of actions
+            sequence_of_states = [] 				# Initialise list of actions of list of actions
+            while state != problem.getStartState():
+                a, b = parent[state] 				# a = parent state, b = action leading to state
+                sequence_of_states.insert(0,a)
+                state = b
+            return sequence_of_states 				# Returning sequence of actions
+
+        explored.append(state) 					# Goal test failed,adding the node to the explored states
+
+        """children"""
+        for successor, action, stepCost in  problem.getSuccessors(state):
+            if successor not in explored + frontier.list: 	# Add to frontier if not in explored or frontier
+                frontier.push(successor)
+                parent[successor] = (action, state)
+
 
 def uniformCostSearch(problem):
 	"""Search the node of least total cost first."""
