@@ -11,8 +11,10 @@ Directory Structure
 
 ---search
 
-	[search.py](search/search.py)
-	[searchAgent.py](search/searchAgent.py)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [search.py](https://github.com/srinadhu/search/blob/master/search/search.py)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [searchAgent.py](search/searchAgent.py)
+
 
 ---[lab.pdf](lab.pdf)
 
@@ -79,4 +81,4 @@ $python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5
 
 Developed by
 ------------
-Sai Srinadhu K, Venkat Sainath T.
+[Sai Srinadhu K](https://www.linkedin.com/in/sai-srinadhu-katta-a189ab11b/), [Venkat Sainath T](https://www.linkedin.com/in/thota-sainath-236571118/).
