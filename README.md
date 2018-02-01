@@ -17,7 +17,7 @@ Directory Structure
 
 ---README.md
 
----[report.pdf](Report.pdf)
+---[report.pdf](report.pdf)
 
 
 Executing
@@ -33,7 +33,7 @@ Task specific commands
 
 Finding a Fixed Food Dot using Depth First Search
 -------------------------------------------------
-$python pacman.py -l tinyMaze -p SearchAgent
+$python pacman.py -l tinyMaze -p SearchAgent_
 $python pacman.py -l mediumMaze -p SearchAgent
 $python pacman.py -l bigMaze -z .5 -p SearchAgent
 
@@ -55,7 +55,7 @@ $python pacman.py -l bigMaze -z .5 -p SearchAgent -a fn=astar,heuristic=manhatta
 
 Finding All the Corners
 -----------------------
-$python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+$python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem_
 $python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
 
 Corners Problem: Heuristic
@@ -72,4 +72,5 @@ Suboptimal Search
 $python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5
 
 Developed by
-Sai Srinadhu K, Sainath.
+------------
+Sai Srinadhu K, Venkat Sainath T.
